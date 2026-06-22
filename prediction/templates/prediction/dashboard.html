@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogecoin Price Prediction</title>
+    <link rel="stylesheet" href="{% static 'prediction/styles.css' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🚀 Dogecoin Price Prediction</h1>
+                <p class="subtitle">AI-Powered ML Model Forecast</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Input Form -->
+            <section class="panel input-panel">
+                <h2>Price Input Form</h2>
+                <form id="predictionForm" class="form">
+                    <div class="form-group">
+                        <label for="open">Open Price ($)</label>
+                        <input type="number" id="open" name="open" step="0.000001" placeholder="0.15" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="high">High Price ($)</label>
+                        <input type="number" id="high" name="high" step="0.000001" placeholder="0.16" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="low">Low Price ($)</label>
+                        <input type="number" id="low" name="low" step="0.000001" placeholder="0.14" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volume">Volume</label>
+                        <input type="number" id="volume" name="volume" step="1" placeholder="1000000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ma5">MA5 (5-Day Moving Average, $)</label>
+                        <input type="number" id="ma5" name="ma5" step="0.000001" placeholder="0.15" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ma10">MA10 (10-Day Moving Average, $)</label>
+                        <input type="number" id="ma10" name="ma10" step="0.000001" placeholder="0.15" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="daily_return">Daily Return (Decimal)</label>
+                        <input type="number" id="daily_return" name="daily_return" step="0.0001" placeholder="0.05" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volatility">Volatility (Std Deviation)</label>
+                        <input type="number" id="volatility" name="volatility" step="0.000001" placeholder="0.01" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-predict">Predict Price</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+
+                <!-- Quick Examples -->
+                <div class="examples">
+                    <h3>Quick Examples</h3>
+                    <button class="btn-example" onclick="loadExample1()">Example 1</button>
+                    <button class="btn-example" onclick="loadExample2()">Example 2</button>
+                    <button class="btn-example" onclick="loadExample3()">Example 3</button>
+                </div>
+            </section>
+
+            <!-- Right Panel: Results -->
+            <section class="panel results-panel">
+                <h2>Prediction Results</h2>
+                
+                <div id="loadingSpinner" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing data...</p>
+                </div>
+
+                <div id="resultsContainer" class="hidden">
+                    <div class="result-box">
+                        <div class="result-label">Predicted Price</div>
+                        <div class="result-value" id="predictedPrice">$0.0000</div>
+                        <div class="result-confidence">
+                            <span id="confidenceText">Ready to predict</span>
+                        </div>
+                    </div>
+
+                    <div class="result-details">
+                        <h3>Input Features</h3>
+                        <div id="featuresDisplay" class="features-grid"></div>
+                    </div>
+
+                    <div class="result-timestamp">
+                        <small id="timestampText">Timestamp will appear here</small>
+                    </div>
+                </div>
+
+                <div id="errorContainer" class="hidden error-box">
+                    <p id="errorMessage">Error message will appear here</p>
+                </div>
+
+                <!-- Chart -->
+                <div id="chartContainer" class="chart-container hidden">
+                    <h3>Price Trend Analysis</h3>
+                    <canvas id="predictionChart"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <!-- Chart Section -->
+        <section class="panel full-width">
+            <h2>Historical Data & Predictions</h2>
+            <div id="historicalChart" style="width:100%;height:400px;"></div>
+        </section>
+
+        <!-- Information Section -->
+        <section class="panel info-section">
+            <h3>About This Model</h3>
+            <div class="info-content">
+                <p><strong>Algorithm:</strong> Random Forest Regressor with 100 estimators</p>
+                <p><strong>Features:</strong> Open, High, Low, Volume, MA5, MA10, Daily Return, Volatility</p>
+                <p><strong>Data:</strong> Trained on historical DOGE-USD data</p>
+                <p><strong>Note:</strong> This model is for educational purposes. Always do your own research before investments.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="{% static 'prediction/script.js' %}"></script>
+</body>
+</html>
